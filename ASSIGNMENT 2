@@ -1,0 +1,50 @@
+import java.util.*;
+
+public class SimpleStatsCalculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the size of the array: ");
+        int size = scanner.nextInt();
+        int[] numbers = new int[size]
+        System.out.println("Enter the elements of the array:");
+        for (int i = 0; i < size; i++) {
+            numbers[i] = scanner.nextInt();
+        }
+        double sum = 0;
+        for (int num : numbers) {
+            sum += num;
+        }
+        double mean = sum / size;
+        Arrays.sort(numbers);
+        double median;
+        if (size % 2 == 0) {
+            median = (numbers[size / 2 - 1] + numbers[size / 2]) / 2.0;
+        } else {
+            median = numbers[size / 2];
+        }
+        int mode = findMode(numbers);
+
+        System.out.println("Mean: " + mean);
+        System.out.println("Median: " + median);
+        System.out.println("Mode: " + mode);
+    }
+
+    public static int findMode(int[] numbers) {
+        Map<Integer, Integer> frequencyMap = new HashMap<>();
+        for (int num : numbers) {
+            frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
+        }
+
+        int mode = -1;
+        int maxFrequency = -1;
+
+        for (Map.Entry<Integer, Integer> entry : frequencyMap.entrySet()) {
+            if (entry.getValue() > maxFrequency) {
+                maxFrequency = entry.getValue();
+                mode = entry.getKey();
+            }
+        }
+
+        return mode;
+    }
+}
